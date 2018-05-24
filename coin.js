@@ -8,6 +8,7 @@ var teclas = {
 var x1 = 250;
 var y1 = 420;
 var lpm = 0;
+var x, e;
 
 
 
@@ -27,6 +28,14 @@ var coin = {
   url: "coin.png",
   cargaOK: false
 };
+var coin1 = {
+  url: "coin1.png",
+  cargaOK: false
+};
+var coin2 = {
+  url: "coin2.png",
+  cargaOK: false
+};
 
 
 fondo.imagen = new Image();
@@ -41,6 +50,16 @@ coin.imagen = new Image();
 coin.imagen.src = coin.url;
 coin.imagen.addEventListener("load", cargarCoin);
 
+coin1.imagen = new Image();
+coin1.imagen.src = coin1.url;
+coin1.imagen.addEventListener("load", cargarCoin1);
+
+coin2.imagen = new Image();
+coin2.imagen.src = coin2.url;
+coin2.imagen.addEventListener("load", cargarCoin2);
+
+
+
 function cargarFondo()
 {
   fondo.cargaOK = true;
@@ -54,46 +73,73 @@ function cargarCerdos()
 function cargarCoin()
 {
   coin.cargaOK = true;
-  var intentando = 1;
   dibujar();
-
+}
+function cargarCoin1()
+{
+  coin1.cargaOK = true;
+  dibujar();
+}
+function cargarCoin2()
+{
+  coin2.cargaOK = true;
+  dibujar();
 }
 
 
 function dibujar()
 {
-  intentando = 1;
+
   if(fondo.cargaOK == true)
   {
     papel.drawImage(fondo.imagen, 0, 0);
-  }
-  if(coin.cargaOK == true)
-  {
-    papel.drawImage(coin.imagen, 200, 30);
-    papel.drawImage(coin.imagen, 400, 300);
   }
   if(cerdo.cargaOK == true)
   {
     papel.drawImage(cerdo.imagen, x1, y1);
   }
-  if(coin.cargaOK == true)
+  if (x1 <= 30 && y1 <= 160 && y1 >= 90 )
   {
-    if(x1 != 0 || y1 != 150)
+    coin.cargaOK = false;
+  }
+  else
+  {
+    if(coin.cargaOK == true)
     {
-      if(intentando == 1)
+      if(x1 >= 30 || y1 >= 160 || y1 <= 90)
       {
-        papel.drawImage(coin.imagen, 0, 150);
-        intentando = intentando + 1;
-        nodibujar();
-
+         papel.drawImage(coin.imagen, 0, 150);
       }
     }
   }
-}
-
-function nodibujar()
-{
-  intentando = 2;
+  if (x1 >= 130 && x1 <= 230 && y1 <= 45 && y1 >= -30 )
+  {
+    coin1.cargaOK = false;
+  }
+  else
+  {
+    if(coin1.cargaOK == true)
+    {
+      if(x1 <= 130 ||x1 >= 230 || y1 >= 45 || y1 <= -30)
+      {
+         papel.drawImage(coin1.imagen, 200, 30);
+      }
+    }
+  }
+  if (x1 >= 330 && x1 <= 430 && y1 <= 315 && y1 >= 240 )
+  {
+    coin2.cargaOK = false;
+  }
+  else
+  {
+    if(coin2.cargaOK == true)
+    {
+      if(x1 <= 330 ||x1 >= 430 || y1 >= 290 || y1 <= 240)
+      {
+         papel.drawImage(coin2.imagen, 400, 300);
+      }
+    }
+  }
 }
 
 
@@ -107,10 +153,6 @@ function dibujarTeclado(evento)
   {
     case teclas.UP:
       y1 = y1 - movimiento;
-      if(y1 == 150)
-      {
-        intentando = 2;
-      }
       dibujar();
     break;
     case teclas.DOWN:
